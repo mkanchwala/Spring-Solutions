@@ -25,7 +25,9 @@ So Add this config in Servers tab :
  
  	For Linux : sudo apt-get install rpm /sudo yum install rpm
 	
- 5) After configuring this go to the base directory of Project, i.e. HOME/workspace/JellyBelly and run the following commands :
+ 5) Run DB Script : 1 - CreateDBwithTable.sql
+ 
+ 6) After configuring this go to the base directory of Project, i.e. HOME/workspace/JellyBelly and run the following commands :
 
 		mvn clean install -e
 		mvn tomcat7:run-war or mvn tomcat7:run

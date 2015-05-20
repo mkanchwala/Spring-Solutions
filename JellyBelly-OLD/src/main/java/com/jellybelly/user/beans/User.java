@@ -1,5 +1,7 @@
 package com.jellybelly.user.beans;
 
+// Generated 20 May, 2015 11:26:08 PM by Hibernate Tools 4.0.0
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Date;
@@ -12,17 +14,20 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- * @author mkanchwala
- */
 @Entity
 @Table(name = "user")
 public class User extends BaseBean {
 
-	private static final long serialVersionUID = 7427622175146338719L;
+	private static final long serialVersionUID = -3749691594913998112L;
 	private Integer userId;
 	private String username;
 	private String password;
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String provider;
+	private String providerId;
+	private String providerSecret;
 	private Boolean isEnabled;
 	private Boolean isVerified;
 	private Integer smsCode;
@@ -61,6 +66,60 @@ public class User extends BaseBean {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Column(name = "first_name", nullable = false, length = 256)
+	public String getFirstName() {
+		return this.firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	@Column(name = "last_name", length = 256)
+	public String getLastName() {
+		return this.lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	@Column(name = "email", nullable = false, length = 256)
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Column(name = "provider", length = 256)
+	public String getProvider() {
+		return this.provider;
+	}
+
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
+
+	@Column(name = "provider_id", length = 256)
+	public String getProviderId() {
+		return this.providerId;
+	}
+
+	public void setProviderId(String providerId) {
+		this.providerId = providerId;
+	}
+
+	@Column(name = "provider_secret", length = 256)
+	public String getProviderSecret() {
+		return this.providerSecret;
+	}
+
+	public void setProviderSecret(String providerSecret) {
+		this.providerSecret = providerSecret;
 	}
 
 	@Column(name = "is_enabled")

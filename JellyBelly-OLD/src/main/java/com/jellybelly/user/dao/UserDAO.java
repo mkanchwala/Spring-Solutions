@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.jellybelly.user.beans.User;
 
 @Repository
-public class UserDAO {
+public class UserDAO extends BaseHibernateDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -34,11 +34,14 @@ public class UserDAO {
 	 * @return List<User>
 	 */
 	@SuppressWarnings("unchecked")
-	public List<User> getUsers(String username){
+	public List<User> getUsers(String username, String email){
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(User.class);
 		if(username != null){
 			criteria.add(Restrictions.eq("username", username));
+		}
+		if(username != null){
+			criteria.add(Restrictions.eq("email", email));
 		}
 		criteria.addOrder(Order.asc("username"));
 		return criteria.list();

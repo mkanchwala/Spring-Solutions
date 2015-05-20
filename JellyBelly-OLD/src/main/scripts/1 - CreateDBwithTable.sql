@@ -29,3 +29,8 @@ CREATE TABLE `user` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `user` (`username`, `password`, `is_enabled`, `is_verified`, `sms_code`, `date_created`, `last_updated`, `created_by`, `last_updated_by`) VALUES 
+  ('mkanchwala', 'babuguddu', 1, 0, 0, '2015-05-19 21:52:29', '2015-05-19 21:52:29', NULL, NULL),
+  ('nchandra', 'jellybelly', 1, 0, 0, '2015-05-19 22:12:32', '2015-05-19 21:52:29', NULL, NULL);
+COMMIT;
+
