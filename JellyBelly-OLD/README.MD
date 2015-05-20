@@ -32,7 +32,7 @@ So Add this config in Servers tab :
 		mvn clean install -e
 		mvn tomcat7:run-war or mvn tomcat7:run
  7) Try http://localhost:8080/jellybelly/user/register
- POST
+ POST application/json
  {
     "username": "test",
     "password": "test",
