@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.jellybelly.user.beans.User;
 import com.jellybelly.user.dao.UserDAO;
+import com.jellybelly.user.service.EmailSender;
 import com.jellybelly.user.service.UserService;
 
 @Service
@@ -19,6 +20,9 @@ public class UserManager {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private EmailSender emailSender;
 
 	public List<User> getUsers() {
 		return userDAO.getUsers(null, null);
@@ -30,6 +34,7 @@ public class UserManager {
 			logger.error("User Already Exists!!!");
 		} else {
 			userDAO.insert(user);
+			emailSender.sendEmail(user.getEmail(), "neeta.chandra@upwork.com", "Welcome to Dashboard!");
 			return user;
 		}
 		return null;
