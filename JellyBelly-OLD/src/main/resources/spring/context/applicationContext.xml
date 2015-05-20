@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+ 						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+  						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+  						http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+  						http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven />
+	<context:annotation-config />
+	<mvc:default-servlet-handler />
+	<context:component-scan base-package="com.jellybelly.user" />
+	<bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer" id="tilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>classpath:tiles-config.xml</value>
+			</list>
+		</property>
+
+		<!-- resolving preparer names as Spring bean definition names -->
+		<property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory" />
+	</bean>
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+		<property name="basename" value="views" />
+	</bean>
+	
+	<!-- App Properties -->
+	<beans:bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="properties" ref="appProperties" />
+	</beans:bean>
+
+	<bean id="appProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="singleton" value="true" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<!-- Note: Properties defined in later files will override properties 
+				defined earlier files, in case of overlapping keys. Hence, make sure that 
+				the most specific files are the last ones in the given list of locations. -->
+			<list>
+				<value>classpath:spring/context/resource/default.xml</value>
+				<value>classpath:properties/user-service.properties</value>
+				<value>classpath:properties/user-service-database.properties</value>
+				<value>file:/opt/jellybelly/config/JellyBelly/user-service.properties</value>
+				<value>file:/opt/jellybelly/config/JellyBelly/user-service-database.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- App Properties End -->
+	
+	<!-- RestTemplate -->
+	<bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
+		<constructor-arg>
+			<bean class="org.apache.http.impl.conn.PoolingClientConnectionManager" />
+		</constructor-arg>
+	</bean>
+
+	<beans:bean id="httpClientFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+		<constructor-arg ref="httpClient" />
+		<property name="readTimeout" value="${timeoutInMS}" />
+	</beans:bean>
+
+	<beans:bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+		<constructor-arg ref="httpClientFactory" />
+		<property name="messageConverters">
+			<list>
+				<beans:bean	class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+				<beans:bean	class="org.springframework.http.converter.FormHttpMessageConverter" />
+				<beans:bean	class="org.springframework.http.converter.StringHttpMessageConverter" />
+				<beans:bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+				<beans:bean	class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+					<constructor-arg>
+						<beans:bean class="org.springframework.oxm.xstream.XStreamMarshaller" />
+					</constructor-arg>
+				</beans:bean>
+				<ref bean="jsonConverter" />
+			</list>
+		</property>
+	</beans:bean>
+
+	<beans:bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes" value="application/json" />
+	</beans:bean>
+
+	<beans:bean id="annotationMethodHandlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jsonConverter" />
+			</list>
+		</property>
+	</beans:bean>
+	<!-- RestTemplate End -->
+
+	<import resource="classpath:spring/context/persistence.xml" />
+</beans>

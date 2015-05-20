@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="properties.context">default</entry>
+
+	<!--Database configuration assume Production settings make sure /etc/hosts entries are in place 
+	TODO: secure passwords see applicationContext-resources.xml
+	-->
+	<entry key="database.datasource.initialSize">20</entry>
+	<entry key="database.datasource.maxActive">50</entry>
+	<entry key="database.datasource.maxIdle">20</entry>
+	<entry key="database.datasource.maxWait">10000</entry> <!-- 10s -->
+	<entry key="database.datasource.timeBetweenEvictionRunsMillis">60000</entry>
+	<entry key="database.datasource.numTestsPerEvictionRun">5</entry>
+	<entry key="database.datasource.minEvictableIdleTimeMillis">60000</entry>
+	<entry key="database.datasource.validationQuery">select 1 from dual</entry>
+
+	<!-- Hibernate configuration -->
+	<entry key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</entry>
+	<entry key="hibernate.show_sql">false</entry>
+	<entry key="hibernate.use_sql_comments">false</entry>
+	<entry key="hibernate.format_sql">false</entry>
+	<entry key="hibernate.generate_statistics">false</entry>
+	<entry key="hibernate.jdbc.batch_size">0</entry>
+
+	<!-- These are Production settings, due to risk; override for dev use a blank 'hibernate.hbm2ddl.auto' in Production
+			or your db credentials will require Table metadata access (which we aren't allowed to have) -->
+	<entry key="hibernate.hbm2ddl.auto"></entry>
+	<entry key="hibernate.jpaVendorAdapter.generateDdl">false</entry>
+</properties>
+
