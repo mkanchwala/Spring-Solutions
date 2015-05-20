@@ -31,6 +31,19 @@ So Add this config in Servers tab :
 
 		mvn clean install -e
 		mvn tomcat7:run-war or mvn tomcat7:run
+ 7) Try http://localhost:8080/jellybelly/user/register
+ POST
+ {
+    "username": "test",
+    "password": "test",
+    "firstName": "test1",
+    "lastName": "test2",
+    "email": "test@gmail.com",
+    "provider": "Normal",
+    "isEnabled":1,
+    "isVerified":0,
+    "smsCode": 0
+}
 		
  1. add spring security dependency (50 min)
 1. http://mvnrepository.com/artifact/org.springframework.security/spring-security-core

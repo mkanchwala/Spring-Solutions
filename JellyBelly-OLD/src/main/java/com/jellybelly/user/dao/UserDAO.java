@@ -40,7 +40,7 @@ public class UserDAO extends BaseHibernateDAO {
 		if(username != null){
 			criteria.add(Restrictions.eq("username", username));
 		}
-		if(username != null){
+		if(email != null){
 			criteria.add(Restrictions.eq("email", email));
 		}
 		criteria.addOrder(Order.asc("username"));
