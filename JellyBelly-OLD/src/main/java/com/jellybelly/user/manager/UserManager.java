@@ -36,8 +36,21 @@ public class UserManager {
 		if (existinguser.size() > 0) {
 			logger.error("User Already Exists!!!");
 		} else {
+			user.setIsVerified(false);
 			userDAO.insert(user);
-		//	emailSender.sendEmail(user.getEmail(), "neeta.chandra@upwork.com", "Welcome to Dashboard!");
+			mailSender.sendMessage(user);
+			return user;
+		}
+		return null;
+	}
+	
+	public User confirmUser(Integer userId) throws MessagingException, IOException {
+		User user = userDAO.getById(userId);
+		if (user == null) {
+			logger.error("User doesn't Exists!!!");
+		} else {
+			user.setIsVerified(true);
+			userDAO.insert(user);
 			mailSender.sendMessage(user);
 			return user;
 		}
