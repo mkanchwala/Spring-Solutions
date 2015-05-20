@@ -5,19 +5,6 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 
 <tiles-definitions>
-	<definition name="base.definition" template="/WEB-INF/views/tiles/layout.jsp">
-		<put-attribute name="title" value="" />
-		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
-		<put-attribute name="menu" value="/WEB-INF/views/tiles/menu.jsp" />
-		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
-	</definition>
-	
-	<!-- <definition name=".login" extends="base.definition" template="/WEB-INF/views/tiles/co.jsp" /> -->
-	
-	<definition name=".contact" extends="base.definition">
-		<put-attribute name="title" value="Contact Manager" />
-		<put-attribute name="body" value="/WEB-INF/views/tiles/contact.jsp" />
-	</definition>
+	<definition name=".login" template="/WEB-INF/views/tiles/login.html" />
 </tiles-definitions>
 

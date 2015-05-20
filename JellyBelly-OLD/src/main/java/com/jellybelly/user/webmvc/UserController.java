@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.jellybelly.user.beans.User;
 import com.jellybelly.user.manager.UserManager;
@@ -27,5 +28,10 @@ public class UserController {
 	public List<User> getUsers() {
 		logger.info("USER-API : Call to Retrieve All the Users ");
 		return userManager.getUsers();
+	}
+	
+	@RequestMapping("/login")
+	public ModelAndView login() {
+		return new ModelAndView("login", "user", new User());
 	}
 }
