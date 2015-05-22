@@ -1,16 +1,23 @@
 package com.mkanchwala.country.beans;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-
-import static javax.persistence.GenerationType.IDENTITY;
-
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "user")
@@ -22,17 +29,31 @@ public class User extends BaseBean {
 	private String username;
 	private String password;
 	private String email;
+	private Date dateCreated;
+	private Date lastUpdated;
+	private String createdBy;
+	private String lastUpdatedBy;
+	private Set<Role> roles = new HashSet<Role>();
 
 	public User() {
 	}
-	
+
 	public User(Integer userId) {
 		this.userId = userId;
 	}
-	
+
 	public User(String email, String username) {
 		this.email = email;
 		this.username = username;
+	}
+
+	public User(User user) {
+		this.email = user.getEmail();
+		this.username = user.getUsername();
+		this.dateCreated = user.getDateCreated();
+		this.lastUpdated = user.getLastUpdated();
+		this.createdBy = user.getCreatedBy();
+		this.lastUpdatedBy = user.getLastUpdatedBy();
 	}
 
 	@Id
@@ -73,12 +94,61 @@ public class User extends BaseBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	@Column(name = "email", nullable = false, length = 256)
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "date_created", nullable = false, length = 19)
+	public Date getDateCreated() {
+		return this.dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "last_updated", length = 19)
+	public Date getLastUpdated() {
+		return this.lastUpdated;
+	}
+
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
+	@Column(name = "created_by", length = 256)
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	@Column(name = "last_updated_by", length = 256)
+	public String getLastUpdatedBy() {
+		return this.lastUpdatedBy;
+	}
+
+	public void setLastUpdatedBy(String lastUpdatedBy) {
+		this.lastUpdatedBy = lastUpdatedBy;
+	}
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 }

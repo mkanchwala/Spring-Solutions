@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 @Transactional
 public interface LanguageDAO extends CrudRepository<Language, Long> {
 	public Language save(Language language);
-	public Language findByLanguageId(Integer languageId);
+	public Language findByNameIgnoreCase(String name);
 }
