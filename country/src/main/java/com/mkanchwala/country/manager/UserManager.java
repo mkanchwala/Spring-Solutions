@@ -25,6 +25,7 @@ public class UserManager implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userDAO.findByUsername(username);
+		System.out.println(user.getUsername() + user.getPassword());
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("User %s does not exist!", username));
 		}

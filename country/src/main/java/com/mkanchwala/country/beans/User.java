@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User extends BaseBean {
 
 	private static final long serialVersionUID = 5967845659161329518L;
@@ -29,6 +29,7 @@ public class User extends BaseBean {
 	private String username;
 	private String password;
 	private String email;
+	private Boolean enabled;
 	private Date dateCreated;
 	private Date lastUpdated;
 	private String createdBy;
@@ -93,6 +94,15 @@ public class User extends BaseBean {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	@Column(name = "enabled")
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@Column(name = "email", nullable = false, length = 256)
