@@ -2,16 +2,16 @@
 # ---------------------------------------
 # Host     : localhost
 # Port     : 3306
-# Database : smartsoft
+# Database : world
 
 
 SET FOREIGN_KEY_CHECKS=0;
 
-DROP DATABASE IF EXISTS `smartsoft`;
+DROP DATABASE IF EXISTS `world`;
 
-CREATE DATABASE `smartsoft`;
+CREATE DATABASE `world`;
 
-USE `smartsoft`;
+USE `world`;
 
 #
 # Structure for the `authorities` table : 

@@ -39,8 +39,8 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 public class OAuth2ServerConfiguration {
 
     private static final String RESOURCE_ID = "RestWebServices";
-    private static final String CLIENT_ID = "SmartSoft";
-    private static final String CLIENT_SECRET = "sm@rt123";
+    private static final String CLIENT_ID = "MKClient";
+    private static final String CLIENT_SECRET = "sm@rty123";
 
     @Configuration
     @EnableResourceServer

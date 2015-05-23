@@ -11,17 +11,19 @@ The following Spring projects are used in this sample app:
 * http://projects.spring.io/spring-security/[Spring Security]
 * http://projects.spring.io/spring-security-oauth/[Spring Security OAuth]
 * http://projects.spring.io/spring-data-jpa/[Spring Data JPA]
+* http://www.mysql.com/[MYSQL]
 
 #### Prerequisites
 - Java 7
 - Maven 3
 - STS IDE
+- Curl Package or Some REST Client
 
 ### Build and run
 - Open the `application.properties` file and set your own configurations.
-- Run the import.sql and setup the database before running the application
+- Run the world.sql in SQLScripts folder and setup the database before running the application (Database contains some data too..)
+ 		mysql -uroot -proot < world.sql
 - Then run the Program, From Terminal or IDE
-- then Insert the provided dummy data for testing.
 
 #### Usage From terminal
 
@@ -35,35 +37,37 @@ Import as *Existing Maven Project* and run it as *Spring Boot App*.
 
 ### Usage
 
-- Run the application and go on http://localhost:8080/
-- Use the following urls to invoke controllers methods and see the interactions
+- Run the application thru one of the above method
+- Use the following urls to invoke controllers methods and see the interactions, Webapp will be deployed on port 8080
   with the database:
+    * `http://localhost:8080/oauth/token` : Creates a new Oauth2 Token
+     Example : curl -X POST -k -vu MKClient:sm@rty123 http://localhost:8080/oauth/token -H "Accept: application/json" -d "client_id=MKClient&client_secret=sm@rty123&username=mkanchwala&password=spring123&grant_type=password&scope=read%20write"
+     
     * `/country/add` [POST] Accept:application/json : Creates a new Country with the provided Languages, Same is used to update the country details or language details.
     Example :     
-    http://localhost:8080/country/add [POST]
-    application/json
-    {
-	    "name": "United States of America",
-	    "code": "USA",
-	    "description": "Lorem ipsum",
-	    "population": 1580,
-	    "capital": "Detroit",
+    curl -v -X POST \
+	   -H "Content-Type: application/json" \
+	   -H "Authorization: Bearer <ACCESS_TOKEN>" \
+	   -d '{
+	    "name": "United Arab Emirates",
+	    "code": "UAE",
+	    "description": "Sample",
+	    "population": 120,
+	    "capital": "Dubai",
 	    "languages": [
-	        {
-	            "name": "English",
-	            "description": "Sample"
-	        },
-	        {
-	            "name": "Urdu",
-	            "description": "Sample"
-	        },
 	        {
 	            "name": "Arabic",
 	            "description": "Sample"
+	        },
+		{
+	            "name": "Urdu",
+	            "description": "Sample"
 	        }
 	    ]
-	}
-    * `/countries?codes=[codes]&val=all`: Get countries details using comma seperated codes. If codes are not mentioned then it'll display all the countries.
+	    }' \
+	   'http://localhost:8080/country/add'
+	   
+    * `/countries?codes=[codes]&val=all`: Get countries details using comma seperated codes. If codes are not mentioned then it'll display all the countries. "codes" is used to provide the countries codes(Unqiue) and "val" (ALL\NONE) is the parameter to return without user's preferred language.
 	Example : 
-	http://localhost:8080/countries?codes=IN
+	curl -v 'http://localhost:8080/countries?codes=IN&val=All' -H "Authorization: Bearer <ACCESS_TOKEN>"
 	
