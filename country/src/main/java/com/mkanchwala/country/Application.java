@@ -4,6 +4,10 @@ package com.mkanchwala.country;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author mkanchwala
+ *
+ */
 @SpringBootApplication
 public class Application {
 	

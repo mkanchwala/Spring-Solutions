@@ -16,6 +16,10 @@ import com.mkanchwala.country.beans.Role;
 import com.mkanchwala.country.beans.User;
 import com.mkanchwala.country.beans.UserDAO;
 
+/**
+ * @author mkanchwala
+ *
+ */
 @Service
 public class UserManager implements UserDetailsService {
 	

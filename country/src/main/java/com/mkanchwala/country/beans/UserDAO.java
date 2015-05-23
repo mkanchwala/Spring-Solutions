@@ -4,6 +4,10 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.repository.CrudRepository;
 
+/**
+ * @author mkanchwala
+ *
+ */
 @Transactional
 public interface UserDAO extends CrudRepository<User, Long> {
 

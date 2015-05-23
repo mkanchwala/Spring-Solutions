@@ -20,6 +20,10 @@ import com.mkanchwala.country.beans.UserDAO;
 import com.mkanchwala.country.dto.CountryDTO;
 import com.mkanchwala.country.dto.LanguageDTO;
 
+/**
+ * @author mkanchwala
+ *
+ */
 @Service
 public class CountryManager {
 	

@@ -19,6 +19,10 @@ package com.mkanchwala.country;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 
+/**
+ * @author mkanchwala
+ *
+ */
 public class WebInitializer extends SpringBootServletInitializer {
 
 	@Override

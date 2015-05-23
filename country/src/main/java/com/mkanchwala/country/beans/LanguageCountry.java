@@ -16,6 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * @author mkanchwala
+ *
+ */
 @Entity
 @Table(name = "language_country")
 public class LanguageCountry extends BaseBean {

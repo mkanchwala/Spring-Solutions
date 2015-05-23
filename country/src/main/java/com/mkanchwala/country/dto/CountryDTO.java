@@ -2,6 +2,10 @@ package com.mkanchwala.country.dto;
 
 import java.util.List;
 
+/**
+ * @author mkanchwala
+ *
+ */
 public class CountryDTO extends BaseDTO {
 	private static final long serialVersionUID = -7014333799276444832L;
 	private String name;

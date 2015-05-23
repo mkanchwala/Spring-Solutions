@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mkanchwala.country.dto.CountryDTO;
 import com.mkanchwala.country.manager.CountryManager;
 
+/**
+ * @author mkanchwala
+ *
+ */
 @RestController
 public class CountryController {
 	
@@ -50,8 +54,10 @@ public class CountryController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@RequestMapping(value = "/country/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	public CountryDTO save(@AuthenticationPrincipal UserDetails user, @RequestBody CountryDTO countryDTO) {
-		
 		System.out.println("REST-API : Call to save the Country details ");
-		return countryManager.save(user, countryDTO);
+		if(countryDTO != null && countryDTO.getCode() != null && countryDTO.getName() != null){
+			return countryManager.save(user, countryDTO);
+		}
+		return null;
     }
 }

@@ -31,6 +31,10 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * @author mkanchwala
+ *
+ */
 @Entity
 public class Role implements GrantedAuthority {
 

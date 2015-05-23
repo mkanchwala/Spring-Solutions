@@ -35,6 +35,10 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
+/**
+ * @author mkanchwala
+ *
+ */
 @Configuration
 public class OAuth2ServerConfiguration {
 

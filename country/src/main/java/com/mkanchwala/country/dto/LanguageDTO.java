@@ -1,5 +1,9 @@
 package com.mkanchwala.country.dto;
 
+/**
+ * @author mkanchwala
+ *
+ */
 public class LanguageDTO extends BaseDTO {
 	private static final long serialVersionUID = 8930815115296195388L;
 	private String name;

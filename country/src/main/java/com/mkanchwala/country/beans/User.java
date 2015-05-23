@@ -19,6 +19,10 @@ import javax.persistence.TemporalType;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+/**
+ * @author mkanchwala
+ *
+ */
 @Entity
 @Table(name = "users")
 public class User extends BaseBean {

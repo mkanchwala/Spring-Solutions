@@ -13,6 +13,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * @author mkanchwala
+ *
+ */
 @Entity
 @Table(name = "language")
 public class Language extends BaseBean {

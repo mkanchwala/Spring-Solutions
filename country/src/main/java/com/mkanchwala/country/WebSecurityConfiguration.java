@@ -27,6 +27,10 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 
 import com.mkanchwala.country.manager.UserManager;
 
+/**
+ * @author mkanchwala
+ *
+ */
 @Configuration
 @EnableWebSecurity
 @EnableWebMvcSecurity
