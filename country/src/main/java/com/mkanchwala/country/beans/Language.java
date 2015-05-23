@@ -113,7 +113,7 @@ public class Language extends BaseBean {
 		this.users = users;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "language")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "language")
 	public Set<LanguageCountry> getLanguageCountries() {
 		return this.languageCountries;
 	}

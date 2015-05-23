@@ -80,6 +80,8 @@ public class OAuth2ServerConfiguration {
                     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
                         CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+                        //CsrfToken csrf = (CsrfToken) request.getAttribute("_csrf");
+                        response.setHeader("TOKEN", "MKANCHWALA");
                          if (csrf != null) {
                             Cookie cookie = WebUtils.getCookie(request, "XSRF-TOKEN");
                             String token = csrf.getToken();
@@ -88,6 +90,13 @@ public class OAuth2ServerConfiguration {
                                 cookie.setPath("/");
                                 response.addCookie(cookie);
                             }
+                            
+                            // Spring Security will allow the Token to be included in this header name
+                            response.setHeader("X-CSRF-HEADER", csrf.getHeaderName());
+                            // Spring Security will allow the token to be included in this parameter name
+                            response.setHeader("X-CSRF-PARAM", csrf.getParameterName());
+                            // this is the value of the token to be included as either a header or an HTTP parameter
+                            response.setHeader("X-CSRF-TOKEN", csrf.getToken());
                         }
                         filterChain.doFilter(request, response);
                     }

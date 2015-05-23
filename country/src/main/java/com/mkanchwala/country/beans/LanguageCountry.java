@@ -53,7 +53,7 @@ public class LanguageCountry extends BaseBean {
 		this.languageCountryId = languageCountryId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "name", nullable = false)
 	public Language getLanguage() {
 		return this.language;
@@ -63,7 +63,7 @@ public class LanguageCountry extends BaseBean {
 		this.language = language;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "code", nullable = false)
 	public Country getCountry() {
 		return this.country;

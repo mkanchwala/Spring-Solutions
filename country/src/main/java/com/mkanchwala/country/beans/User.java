@@ -68,7 +68,7 @@ public class User extends BaseBean {
 		this.userId = userId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "preferred_language", nullable = false)
 	public Language getLanguage() {
 		return this.language;

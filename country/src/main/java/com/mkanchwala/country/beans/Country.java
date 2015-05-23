@@ -136,7 +136,7 @@ public class Country extends BaseBean {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "country")
 	public Set<LanguageCountry> getLanguageCountries() {
 		return this.languageCountries;
 	}
