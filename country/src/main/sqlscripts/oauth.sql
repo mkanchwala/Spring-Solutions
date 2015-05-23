@@ -1,4 +1,3 @@
-
 drop database smartsoft;
 
 create database smartsoft;
@@ -48,18 +47,7 @@ create table oauth_code (
 );
 
 -- customized oauth_client_details table
-create table ClientDetails (
-  appId VARCHAR(256) PRIMARY KEY,
-  resourceIds VARCHAR(256),
-  appSecret VARCHAR(256),
-  scope VARCHAR(256),
-  grantTypes VARCHAR(256),
-  redirectUrl VARCHAR(256),
-  authorities VARCHAR(256),
-  access_token_validity INTEGER,
-  refresh_token_validity INTEGER,
-  additionalInformation VARCHAR(4096)
-);
+
 
 CREATE TABLE `authorities` (
   `username` varchar(50) NOT NULL,
@@ -67,13 +55,6 @@ CREATE TABLE `authorities` (
   UNIQUE KEY `ix_auth_username` (`username`,`authority`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-
-
-truncate users;
-truncate user_role;
-truncate authorities;
-
 curl -X POST -k -vu clientapp:123456 http://localhost:8080/oauth/token -H "Accept: application/json" -d "password=spring123&username=mkanchwala&grant_type=password&scope=read%20write&client_secret=123456&client_id=clientapp"
-
-curl http://localhost:8080/countries -H "Authorization: Bearer 8c24995b-62fb-489b-bfb5-6959555cb389"
+curl http://localhost:8080/countries -H "Authorization: Bearer 60c4fe1f-2ff6-4316-8d32-9dab0c36cd1c"
 

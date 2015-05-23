@@ -29,7 +29,7 @@ public class User extends BaseBean {
 	private String username;
 	private String password;
 	private String email;
-	private Boolean enabled;
+	private boolean enabled;
 	private Date dateCreated;
 	private Date lastUpdated;
 	private String createdBy;

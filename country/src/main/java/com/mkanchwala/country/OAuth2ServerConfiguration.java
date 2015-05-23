@@ -68,30 +68,22 @@ public class OAuth2ServerConfiguration {
         public void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
                     .antMatchers("/country").hasRole("ADMIN")
-                    .antMatchers("/countries").authenticated()
-                    .antMatchers("/oauth/token").authenticated()
-                    .and()
-                    .csrf()
-                    .csrfTokenRepository(csrfTokenRepository()).and()
-                    .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
-                    ;
+                    .antMatchers("/countries").authenticated()/*
+                    .antMatchers("/oauth/token").authenticated()*/
+                    .and().csrf().csrfTokenRepository(csrfTokenRepository()).and().addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
             }
 
             private Filter csrfHeaderFilter() {
                 return new OncePerRequestFilter() {
 
                     @Override
-                    protected void doFilterInternal(HttpServletRequest request,
-                            HttpServletResponse response, FilterChain filterChain)
-                            throws ServletException, IOException {
+                    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-                        CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class
-                                .getName());
+                        CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
                          if (csrf != null) {
                             Cookie cookie = WebUtils.getCookie(request, "XSRF-TOKEN");
                             String token = csrf.getToken();
-                            if (cookie == null || token != null
-                                    && !token.equals(cookie.getValue())) {
+                            if (cookie == null || token != null && !token.equals(cookie.getValue())) {
                                 cookie = new Cookie("XSRF-TOKEN", token);
                                 cookie.setPath("/");
                                 response.addCookie(cookie);
@@ -101,6 +93,7 @@ public class OAuth2ServerConfiguration {
                     }
                 };
             }
+            
             private CsrfTokenRepository csrfTokenRepository() {
                 HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
                 repository.setHeaderName("X-XSRF-TOKEN");
@@ -111,8 +104,7 @@ public class OAuth2ServerConfiguration {
 
     @Configuration
     @EnableAuthorizationServer
-    protected static class AuthorizationServerConfiguration extends
-            AuthorizationServerConfigurerAdapter {
+    protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
 
         @Autowired
@@ -122,15 +114,9 @@ public class OAuth2ServerConfiguration {
         @Autowired
         DataSource dataSource;
 
-
         @Override
-        public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-                throws Exception {
-
-            endpoints
-                .tokenStore(new JdbcTokenStore(dataSource))
-                .authenticationManager(this.authenticationManager);
-
+        public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+            endpoints.tokenStore(new JdbcTokenStore(dataSource)).authenticationManager(this.authenticationManager);
         }
 
         @Override
@@ -153,7 +139,5 @@ public class OAuth2ServerConfiguration {
             tokenServices.setTokenStore(new JdbcTokenStore(dataSource));
             return tokenServices;
         }
-
-
     }
 }
