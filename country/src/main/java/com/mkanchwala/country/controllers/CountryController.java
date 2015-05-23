@@ -49,9 +49,9 @@ public class CountryController {
 	@Transactional
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@RequestMapping(value = "/country/add", method = RequestMethod.POST, headers = "Accept=application/json")
-	public CountryDTO save(/*@AuthenticationPrincipal UserDetails user,*/ @RequestBody CountryDTO countryDTO) {
+	public CountryDTO save(@AuthenticationPrincipal UserDetails user, @RequestBody CountryDTO countryDTO) {
 		
 		System.out.println("REST-API : Call to save the Country details ");
-		return countryManager.save(null, countryDTO);
+		return countryManager.save(user, countryDTO);
     }
 }

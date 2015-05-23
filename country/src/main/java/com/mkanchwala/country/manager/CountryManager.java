@@ -57,10 +57,20 @@ public class CountryManager {
 		if(countryDTO.getLanguages() != null && countryDTO.getLanguages().size() > 0){
 			for(LanguageDTO languageDTO : countryDTO.getLanguages()){
 				Language existingLanguage = languageDAO.findByNameIgnoreCase(languageDTO.getName());
+				//Saving the Mappings between the Countries and Languages
+				LanguageCountry languageCountry = new LanguageCountry();
+				languageCountry.setCountry(country);
 				if(existingLanguage != null){
+					
 					//Updating the Existing one's details
 					existingLanguage.setLastUpdated(new Date());
 					existingLanguage.setLastUpdatedBy(userDetails.getUsername());
+					languageDAO.save(existingLanguage);
+					
+					//Updating the Language's Mapping
+					languageCountry.setLanguage(existingLanguage);
+					languageCountry.setCreatedBy(existingLanguage.getCreatedBy());
+					languageCountry.setLastUpdatedBy(existingLanguage.getLastUpdatedBy());
 					BeanUtils.copyProperties(existingLanguage, languageDTO);
 					System.out.println("Already Exists : " + languageDTO.getName());
 				} else {
@@ -73,14 +83,16 @@ public class CountryManager {
 					language.setLastUpdatedBy(userDetails.getUsername());
 					languageDAO.save(language);
 					
-					//Saving the Mappings between the Countries and Languages
-					LanguageCountry languageCountry = new LanguageCountry();
-					languageCountry.setCountry(country);
+					//LanguagecountryMapping
 					languageCountry.setLanguage(language);
-					languageCountry.setDateCreated(new Date());
-					languageCountry.setLastUpdated(new Date());
 					languageCountry.setCreatedBy(language.getCreatedBy());
 					languageCountry.setLastUpdatedBy(language.getLastUpdatedBy());
+				}
+				
+				//Save if there is none existing
+				if(languageCountryDAO.findByLanguageNameAndCountryCode(languageDTO.getName(), countryDTO.getCode()) == null){
+					languageCountry.setDateCreated(new Date());
+					languageCountry.setLastUpdated(new Date());
 					languageCountryDAO.save(languageCountry);
 				}
 			}
@@ -116,15 +128,12 @@ public class CountryManager {
 			for (LanguageCountry languageCountry : country.getLanguageCountries()) {
 				//Adding All Languages
 				if(val != null && val.equalsIgnoreCase("ALL")){
-					System.out.println("Adding All");
 					LanguageDTO languageDTO = new LanguageDTO();
 					BeanUtils.copyProperties(languageCountry.getLanguage(), languageDTO);
 					languages.add(languageDTO);
-					
 				} 
 				//Adding User Preferred only
 				else if (user.getLanguage().getName().equalsIgnoreCase(languageCountry.getLanguage().getName())){
-					System.out.println("Adding Selected");
 					LanguageDTO languageDTO = new LanguageDTO();
 					BeanUtils.copyProperties(languageCountry.getLanguage(), languageDTO);
 					languages.add(languageDTO);

@@ -16,14 +16,6 @@
 
 package com.mkanchwala.country;
 
-import java.io.IOException;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,17 +34,13 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.WebUtils;
 
 @Configuration
 public class OAuth2ServerConfiguration {
 
-    private static final String RESOURCE_ID = "rest_api";
+    private static final String RESOURCE_ID = "RestWebServices";
+    private static final String CLIENT_ID = "SmartSoft";
+    private static final String CLIENT_SECRET = "sm@rt123";
 
     @Configuration
     @EnableResourceServer
@@ -70,43 +58,7 @@ public class OAuth2ServerConfiguration {
                     .antMatchers("/country").hasRole("ADMIN")
                     .antMatchers("/countries").authenticated()/*
                     .antMatchers("/oauth/token").authenticated()*/
-                    .and().csrf().csrfTokenRepository(csrfTokenRepository()).and().addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
-            }
-
-            private Filter csrfHeaderFilter() {
-                return new OncePerRequestFilter() {
-
-                    @Override
-                    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-                        CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-                        //CsrfToken csrf = (CsrfToken) request.getAttribute("_csrf");
-                        response.setHeader("TOKEN", "MKANCHWALA");
-                         if (csrf != null) {
-                            Cookie cookie = WebUtils.getCookie(request, "XSRF-TOKEN");
-                            String token = csrf.getToken();
-                            if (cookie == null || token != null && !token.equals(cookie.getValue())) {
-                                cookie = new Cookie("XSRF-TOKEN", token);
-                                cookie.setPath("/");
-                                response.addCookie(cookie);
-                            }
-                            
-                            // Spring Security will allow the Token to be included in this header name
-                            response.setHeader("X-CSRF-HEADER", csrf.getHeaderName());
-                            // Spring Security will allow the token to be included in this parameter name
-                            response.setHeader("X-CSRF-PARAM", csrf.getParameterName());
-                            // this is the value of the token to be included as either a header or an HTTP parameter
-                            response.setHeader("X-CSRF-TOKEN", csrf.getToken());
-                        }
-                        filterChain.doFilter(request, response);
-                    }
-                };
-            }
-            
-            private CsrfTokenRepository csrfTokenRepository() {
-                HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-                repository.setHeaderName("X-XSRF-TOKEN");
-                return repository;
+                    .and().csrf().disable();
             }
         }
 
@@ -130,12 +82,12 @@ public class OAuth2ServerConfiguration {
 
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-            clients.jdbc(dataSource).withClient("clientapp")
+            clients.jdbc(dataSource).withClient(CLIENT_ID)
 				.authorizedGrantTypes("password", "refresh_token")
 				.authorities("USER")
 				.scopes("read", "write")
 				.resourceIds(RESOURCE_ID)
-				.secret("123456");
+				.secret(CLIENT_SECRET);
         }
 
         @Bean
