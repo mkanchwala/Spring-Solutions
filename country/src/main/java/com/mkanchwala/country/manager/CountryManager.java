@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.mkanchwala.country.beans.Country;
@@ -68,7 +69,7 @@ public class CountryManager {
 		return countryDTO;
 	}
 	
-	public List<CountryDTO> findByCodes(String[] codes) {
+	public List<CountryDTO> findByCodes(UserDetails userDetails, String[] codes) {
 		List<CountryDTO> countries = new ArrayList<CountryDTO>();
 		List<Country> listCountries = null;
 		if (codes != null && codes.length > 0) {
