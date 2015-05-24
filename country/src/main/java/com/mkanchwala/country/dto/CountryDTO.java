@@ -8,18 +8,16 @@ import java.util.List;
  */
 public class CountryDTO extends BaseDTO {
 	private static final long serialVersionUID = -7014333799276444832L;
-	private String name;
+	private String worldName;
 	private String code;
-	private String description;
 	private Long population;
-	private String capital;
-	private List<LanguageDTO> languages;
+	private List<CountryTranslationDTO> translations;
 	
-	public String getName() {
-		return name;
+	public String getWorldName() {
+		return worldName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setWorldName(String worldName) {
+		this.worldName = worldName;
 	}
 	public String getCode() {
 		return code;
@@ -27,40 +25,26 @@ public class CountryDTO extends BaseDTO {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
 	public Long getPopulation() {
 		return population;
 	}
 	public void setPopulation(Long population) {
 		this.population = population;
 	}
-	public String getCapital() {
-		return capital;
+	public List<CountryTranslationDTO> getTranslations() {
+		return translations;
 	}
-	public void setCapital(String capital) {
-		this.capital = capital;
-	}
-	public List<LanguageDTO> getLanguages() {
-		return languages;
-	}
-	public void setLanguages(List<LanguageDTO> languages) {
-		this.languages = languages;
+	public void setTranslations(List<CountryTranslationDTO> translations) {
+		this.translations = translations;
 	}
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((capital == null) ? 0 : capital.hashCode());
 		result = prime * result + ((code == null) ? 0 : code.hashCode());
-		result = prime * result	+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result	+ ((languages == null) ? 0 : languages.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result	+ ((translations == null) ? 0 : translations.hashCode());
+		result = prime * result + ((worldName == null) ? 0 : worldName.hashCode());
 		result = prime * result	+ ((population == null) ? 0 : population.hashCode());
 		return result;
 	}
@@ -74,30 +58,20 @@ public class CountryDTO extends BaseDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		CountryDTO other = (CountryDTO) obj;
-		if (capital == null) {
-			if (other.capital != null)
-				return false;
-		} else if (!capital.equals(other.capital))
-			return false;
 		if (code == null) {
 			if (other.code != null)
 				return false;
 		} else if (!code.equals(other.code))
 			return false;
-		if (description == null) {
-			if (other.description != null)
+		if (translations == null) {
+			if (other.translations != null)
 				return false;
-		} else if (!description.equals(other.description))
+		} else if (!translations.equals(other.translations))
 			return false;
-		if (languages == null) {
-			if (other.languages != null)
+		if (worldName == null) {
+			if (other.worldName != null)
 				return false;
-		} else if (!languages.equals(other.languages))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
+		} else if (!worldName.equals(other.worldName))
 			return false;
 		if (population == null) {
 			if (other.population != null)
@@ -109,7 +83,7 @@ public class CountryDTO extends BaseDTO {
 	
 	@Override
 	public String toString() {
-		return "CountryDTO [name=" + name + ", code=" + code + ", description="	+ description + ", population=" + population + ", capital="	+ capital + ", languages=" + languages + "]";
+		return "CountryDTO [worldName=" + worldName + ", code=" + code + ", population=" + population + ", translations=" + translations + "]";
 	}
 	
 }

@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.mkanchwala.country.beans.Country;
 import com.mkanchwala.country.beans.CountryDAO;
+import com.mkanchwala.country.beans.CountryTranslation;
+import com.mkanchwala.country.beans.CountryTranslationDAO;
 import com.mkanchwala.country.beans.Language;
-import com.mkanchwala.country.beans.LanguageCountry;
-import com.mkanchwala.country.beans.LanguageCountryDAO;
 import com.mkanchwala.country.beans.LanguageDAO;
 import com.mkanchwala.country.beans.User;
 import com.mkanchwala.country.beans.UserDAO;
 import com.mkanchwala.country.dto.CountryDTO;
-import com.mkanchwala.country.dto.LanguageDTO;
+import com.mkanchwala.country.dto.CountryTranslationDTO;
 
 /**
  * @author mkanchwala
@@ -34,7 +34,7 @@ public class CountryManager {
 	private LanguageDAO languageDAO;
 	
 	@Autowired
-	private LanguageCountryDAO languageCountryDAO;
+	private CountryTranslationDAO languageCountryDAO;
 	
 	@Autowired
 	private UserDAO userDAO;
@@ -58,12 +58,16 @@ public class CountryManager {
 		country.setLastUpdatedBy(userDetails.getUsername());
 		countryDAO.save(country);
 		
-		if(countryDTO.getLanguages() != null && countryDTO.getLanguages().size() > 0){
-			for(LanguageDTO languageDTO : countryDTO.getLanguages()){
+		if(countryDTO.getTranslations() != null && countryDTO.getTranslations().size() > 0){
+			for(CountryTranslationDTO languageDTO : countryDTO.getTranslations()){
 				Language existingLanguage = languageDAO.findByNameIgnoreCase(languageDTO.getName());
 				//Saving the Mappings between the Countries and Languages
-				LanguageCountry languageCountry = new LanguageCountry();
+				CountryTranslation languageCountry = new CountryTranslation();
 				languageCountry.setCountry(country);
+				System.out.println(languageDTO.getLocalName() + " | " + languageDTO.getCapital());
+				languageCountry.setLocalName(languageDTO.getLocalName());
+				languageCountry.setCapital(languageDTO.getCapital());
+				languageCountry.setDescription(languageDTO.getDetails());
 				if(existingLanguage != null){
 					
 					//Updating the Existing one's details
@@ -80,6 +84,7 @@ public class CountryManager {
 				} else {
 					//Saving the Langauges
 					Language language = new Language();
+					System.out.println("Adding new : " + languageDTO.getName());
 					BeanUtils.copyProperties(languageDTO, language);
 					language.setDateCreated(new Date());
 					language.setLastUpdated(new Date());
@@ -128,22 +133,28 @@ public class CountryManager {
 			CountryDTO countryDTO = new CountryDTO();
 			BeanUtils.copyProperties(country, countryDTO);
 			
-			List<LanguageDTO> languages = new ArrayList<LanguageDTO>();
-			for (LanguageCountry languageCountry : country.getLanguageCountries()) {
+			List<CountryTranslationDTO> languages = new ArrayList<CountryTranslationDTO>();
+			for (CountryTranslation languageCountry : country.getCountryTranslations()) {
 				//Adding All Languages
 				if(val != null && val.equalsIgnoreCase("ALL")){
-					LanguageDTO languageDTO = new LanguageDTO();
+					CountryTranslationDTO languageDTO = new CountryTranslationDTO();
 					BeanUtils.copyProperties(languageCountry.getLanguage(), languageDTO);
+					languageDTO.setLocalName(languageCountry.getLocalName());
+					languageDTO.setCapital(languageCountry.getCapital());
+					languageDTO.setDetails(languageCountry.getDescription());
 					languages.add(languageDTO);
 				} 
 				//Adding User Preferred only
 				else if (user.getLanguage().getName().equalsIgnoreCase(languageCountry.getLanguage().getName())){
-					LanguageDTO languageDTO = new LanguageDTO();
+					CountryTranslationDTO languageDTO = new CountryTranslationDTO();
 					BeanUtils.copyProperties(languageCountry.getLanguage(), languageDTO);
+					languageDTO.setLocalName(languageCountry.getLocalName());
+					languageDTO.setCapital(languageCountry.getCapital());
+					languageDTO.setDetails(languageCountry.getDescription());
 					languages.add(languageDTO);
 				}
 			}
-			countryDTO.setLanguages(languages);
+			countryDTO.setTranslations(languages);
 			countries.add(countryDTO);
 		}
 		return countries;

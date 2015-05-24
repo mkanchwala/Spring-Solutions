@@ -20,6 +20,6 @@ public interface CountryDAO extends CrudRepository<Country, Long> {
 	  @Query("SELECT c FROM Country c WHERE c.code IN :codes")
 	  public List<Country> findByCodes(@Param("codes")String[] codes);
 	  
-	  public Country findByCodeAndNameAllIgnoreCase(String code, String name);
+	  public Country findByCodeAndWorldNameAllIgnoreCase(String code, String worldName);
 	 
 }

@@ -16,8 +16,15 @@
 
 package com.mkanchwala.country;
 
+import java.util.Locale;
+
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 /**
  * @author mkanchwala
@@ -29,5 +36,4 @@ public class WebInitializer extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(Application.class);
 	}
-
 }

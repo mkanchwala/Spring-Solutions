@@ -55,7 +55,7 @@ public class CountryController {
 	@RequestMapping(value = "/country/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	public CountryDTO save(@AuthenticationPrincipal UserDetails user, @RequestBody CountryDTO countryDTO) {
 		System.out.println("REST-API : Call to save the Country details ");
-		if(countryDTO != null && countryDTO.getCode() != null && countryDTO.getName() != null){
+		if(countryDTO != null && countryDTO.getCode() != null && countryDTO.getWorldName() != null){
 			return countryManager.save(user, countryDTO);
 		}
 		return null;
