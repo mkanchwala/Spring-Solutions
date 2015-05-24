@@ -49,22 +49,31 @@ Import as *Existing Maven Project* and run it as *Spring Boot App*.
 	   -H "Content-Type: application/json" \
 	   -H "Authorization: Bearer <ACCESS_TOKEN>" \
 	   -d '{
-	    "name": "United Arab Emirates",
-	    "code": "UAE",
-	    "description": "Sample",
-	    "population": 120,
-	    "capital": "Dubai",
-	    "languages": [
-	        {
-	            "name": "Arabic",
-	            "description": "Sample"
-	        },
-		{
-	            "name": "Urdu",
-	            "description": "Sample"
-	        }
-	    ]
-	    }' \
+		    "worldName": "United Arab Emirates",
+		    "code": "UAE",
+		    "population": 120,
+		    "translations": [
+			{
+			    "name": "English",
+			    "description": "World Official Language",
+			    "localName": "Emirates",
+			    "capital": "Abu Dhabi",
+			    "details": "This country is a federation of seven emirates"
+			},
+			{
+			    "name": "Arabic",
+			    "localName": "الإمارات العربية المتحدة",
+			    "capital": "ابوظبي",
+			    "details": "الإمَارَات العَرَبيّة المُتّحِدة"
+			},
+			{
+			    "name": "اردو",
+			    "localName": "متحدہ عرب امارات",
+			    "capital": "ابو_ظہبی",
+			    "details": " جزیرہ نمائے عرب کے جنوب مشرقی ساحلوں پر واقع ایک ملک ہے جو 7 امارات: ابوظہبی"
+			}
+		    ]
+		}' \
 	   'http://localhost:8080/country/add'
 	   
     * `/countries?codes=[codes]&val=all`: Get countries details using comma seperated codes. If codes are not mentioned then it'll display all the countries. "codes" is used to provide the countries codes(Unqiue) and "val" (ALL\NONE) is the parameter to return without user's preferred language.
