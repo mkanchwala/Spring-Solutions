@@ -20,7 +20,8 @@ import com.jellybelly.user.beans.Config;
  */
 @Configuration
 @ComponentScan(basePackages = {
-        "com.jellybelly.user.service"
+        "com.jellybelly.user.service",
+        "com.jellybelly.user.manager"
 })
 @Import({WebAppContext.class, PersistenceContext.class, SecurityContext.class, SocialContext.class})
 @PropertySource("classpath:application.properties")
