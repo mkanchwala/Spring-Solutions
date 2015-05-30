@@ -1,5 +1,9 @@
 package com.jellybelly.user.manager;
 
+import java.io.IOException;
+
+import javax.mail.MessagingException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +18,8 @@ import com.jellybelly.user.beans.User;
 import com.jellybelly.user.beans.Views;
 import com.jellybelly.user.dto.RegistrationDTO;
 import com.jellybelly.user.service.DuplicateEmailException;
-import com.jellybelly.user.service.UserService;
+import com.jellybelly.user.service.RepositoryUserService;
+import com.jellybelly.user.service.UserDoesnotExistException;
 import com.jellybelly.user.validation.ValidatorUtil;
 
 @Service
@@ -22,7 +27,7 @@ public class UserManager {
 	private static final Logger logger = LoggerFactory.getLogger(UserManager.class);
 	
 	@Autowired
-	private UserService userService;
+	private RepositoryUserService userService;
 	
 	/**
      * Creates the form object used in the registration form.
@@ -39,11 +44,10 @@ public class UserManager {
             registrationDTO.setEmail(socialMediaProfile.getEmail());
             registrationDTO.setFirstName(socialMediaProfile.getFirstName());
             registrationDTO.setLastName(socialMediaProfile.getLastName());
-
+            
             ConnectionKey providerKey = connection.getKey();
             registrationDTO.setSignInProvider(SocialMedia.valueOf(providerKey.getProviderId().toUpperCase()));
         }
-
         return registrationDTO;
     }
     
@@ -64,4 +68,12 @@ public class UserManager {
         }
         return registered;
     }
+    
+    /**
+     * Confirms a new user account by calling from an email link.
+     */
+    public User confirmUser(Long userId) throws MessagingException, IOException, UserDoesnotExistException {
+		User user = userService.confirmUser(userId);
+		return user;
+	}
 }

@@ -5,23 +5,26 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import com.jellybelly.user.beans.User;
+import com.jellybelly.user.beans.VM;
 import com.jellybelly.user.beans.Views;
 import com.jellybelly.user.dto.RegistrationDTO;
 import com.jellybelly.user.manager.UserManager;
 import com.jellybelly.user.service.MailSender;
-import com.jellybelly.user.service.UserService;
 import com.jellybelly.user.validation.SecurityUtil;
 
 /**
@@ -39,9 +42,6 @@ public class RegistrationController {
     @Autowired
     private UserManager userManager;
     
-    @Autowired
-    private UserService userService;
-
     /**
      * Handles the Registration Form Page and Returns the View
      * 
@@ -89,8 +89,18 @@ public class RegistrationController {
         //If the user is signing in by using a social provider, this method call stores
         //the connection to the UserConnection table. Otherwise, this method does not
         //do anything.
-        mailSender.sendMessage(registered);
+        mailSender.sendMessage(registered, VM.REGISTER.parameterName);
         ProviderSignInUtils.handlePostSignUp(registered.getEmail(), request);
         return Views.REDIRECT_HOME.parameterName;
     }
+    
+    @Transactional
+	@ResponseStatus(value = HttpStatus.CREATED)
+	@RequestMapping(value = "/user/confirmed", method = RequestMethod.GET)
+	public User confirmUser(Long userId) throws Exception {
+		logger.info("REST-API : Confirm User " + userId);
+		User user = userManager.confirmUser(userId);
+		mailSender.sendMessage(user, VM.CONFIRM.parameterName);
+		return user;
+	}
 }

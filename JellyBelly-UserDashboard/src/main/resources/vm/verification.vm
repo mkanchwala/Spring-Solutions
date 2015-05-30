@@ -7,10 +7,8 @@
     <body>
         Dear ${firstName} ${lastName},<p/>
  
-        Please verify your email Id by clicking on the following link.<p/>
+        Your account has been verified. Thanks for choosing us<p/>
         
-        ${baseUrl}/user/confirmed?userId=${userId}
- 
  		<br/>
         Thanks<br/>
         M Development Team.

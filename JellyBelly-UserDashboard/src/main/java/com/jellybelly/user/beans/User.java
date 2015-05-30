@@ -17,7 +17,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Entity
 @Table(name = "user_accounts")
 public class User extends BaseEntity<Long> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -41,6 +40,12 @@ public class User extends BaseEntity<Long> {
     @Enumerated(EnumType.STRING)
     @Column(name = "sign_in_provider", length = 20)
     private SocialMedia signInProvider;
+    
+    @Column(name = "is_verified", columnDefinition = "TINYINT")
+	private Boolean isVerified;
+    
+    @Column(name = "sms_code")
+	private Integer smsCode;
 
     public User() {
 
@@ -78,18 +83,31 @@ public class User extends BaseEntity<Long> {
     public SocialMedia getSignInProvider() {
         return signInProvider;
     }
+    
+    public Boolean getIsVerified() {
+        return isVerified;
+    }
+    
+    public void setIsVerified(Boolean isVerified) {
+        this.isVerified = isVerified;
+    }
+    
+    public Integer getSmsCode() {
+        return smsCode;
+    }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("creationTime", this.getCreationTime())
+                .append("dateCreated", this.getDateCreated())
                 .append("email", email)
                 .append("firstName", firstName)
                 .append("lastName", lastName)
-                .append("modificationTime", this.getModificationTime())
+                .append("lastUpdated", this.getLastUpdated())
                 .append("signInProvider", this.getSignInProvider())
-                .append("version", this.getVersion())
+                .append("isVerified", this.getIsVerified())
+                .append("smsCode", this.getSmsCode())
                 .toString();
     }
 
@@ -124,6 +142,16 @@ public class User extends BaseEntity<Long> {
 
         public Builder signInProvider(SocialMedia signInProvider) {
             user.signInProvider = signInProvider;
+            return this;
+        }
+        
+        public Builder isVerified(Boolean isVerified) {
+            user.isVerified = isVerified;
+            return this;
+        }
+        
+        public Builder smsCode(Integer smsCode) {
+            user.smsCode = smsCode;
             return this;
         }
 

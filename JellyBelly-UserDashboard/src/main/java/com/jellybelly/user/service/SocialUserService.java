@@ -12,13 +12,13 @@ import org.springframework.social.security.SocialUserDetailsService;
 /**
  * @author mkanchwala
  */
-public class SimpleSocialUserDetailsService implements SocialUserDetailsService {
+public class SocialUserService implements SocialUserDetailsService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleSocialUserDetailsService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SocialUserService.class);
 
     private UserDetailsService userDetailsService;
 
-    public SimpleSocialUserDetailsService(UserDetailsService userDetailsService) {
+    public SocialUserService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -31,11 +31,8 @@ public class SimpleSocialUserDetailsService implements SocialUserDetailsService 
      */
     @Override
     public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException, DataAccessException {
-        LOGGER.debug("Loading user by user id: {}", userId);
-
+    	logger.debug("Loading user by user id: {}", userId);
         UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
-        LOGGER.debug("Found user details: {}", userDetails);
-
         return (SocialUserDetails) userDetails;
     }
 }

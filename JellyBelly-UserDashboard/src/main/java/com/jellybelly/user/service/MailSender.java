@@ -46,6 +46,7 @@ public class MailSender {
 	public HashMap<String, Object> setTemplateParam(User user) {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		if (user != null) {
+			hashMap.put("userId", user.getId());
 			hashMap.put("firstName", user.getFirstName());
 			hashMap.put("lastName", user.getLastName());
 			hashMap.put("email", user.getEmail());
@@ -54,7 +55,7 @@ public class MailSender {
 		return hashMap;
 	}
 
-	public boolean sendMessage(User user) throws Exception {
+	public boolean sendMessage(User user, String vmName) throws Exception {
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.host", env.getProperty("smtpHost"));
@@ -109,7 +110,7 @@ public class MailSender {
 		MimeMultipart mimeMultipart = new MimeMultipart("related");
 
 		boolean hasBodyPart = false;
-		String msgBody = this.findMessageTemplate("register.vm", this.setTemplateParam(user));
+		String msgBody = this.findMessageTemplate(vmName, this.setTemplateParam(user));
 		logger.debug(msgBody);
 		
 		if (msgBody != null && !msgBody.trim().equals("")) {

@@ -12,9 +12,9 @@
 
 SET FOREIGN_KEY_CHECKS=0;
 
-DROP DATABASE IF EXISTS `jellybelly_new`;
-CREATE DATABASE `jellybelly_new` CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
-USE `jellybelly_new`;
+DROP DATABASE IF EXISTS `jellybelly`;
+CREATE DATABASE `jellybelly` CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';
+USE `jellybelly`;
 
 #
 # Structure for the `UserConnection` table : 
@@ -38,15 +38,17 @@ CREATE UNIQUE INDEX UserConnectionRank on UserConnection(userId, providerId, ran
 #
 CREATE TABLE `user_accounts` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `creation_time` datetime NOT NULL,
   `email` varchar(100) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
-  `modification_time` datetime NOT NULL,
   `password` varchar(255),
   `role` varchar(20) NOT NULL,
   `sign_in_provider` varchar(20),
   `version` bigint(20) NOT NULL,
+  `is_verified` tinyint(4) DEFAULT 0,
+  `sms_code` int(11) DEFAULT 0000,
+  `date_created` datetime DEFAULT NULL,
+  `last_updated` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

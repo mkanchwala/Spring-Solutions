@@ -16,7 +16,7 @@ import org.springframework.social.security.SpringSocialConfigurer;
 
 import com.jellybelly.user.dao.UserDAO;
 import com.jellybelly.user.service.RepositoryUserDetailsService;
-import com.jellybelly.user.service.SimpleSocialUserDetailsService;
+import com.jellybelly.user.service.SocialUserService;
 
 /**
  * @author mkanchwala
@@ -88,7 +88,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public SocialUserDetailsService socialUserDetailsService() {
-        return new SimpleSocialUserDetailsService(userDetailsService());
+        return new SocialUserService(userDetailsService());
     }
 
     /**

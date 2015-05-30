@@ -1,35 +1,38 @@
 package com.jellybelly.user.beans;
 
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Version;
+
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-
-import javax.persistence.*;
 
 /**
  * @author mkanchwala
  */
 @MappedSuperclass
 public abstract class BaseEntity<ID> {
-
-    @Column(name = "creation_time", nullable = false)
+    @Column(name = "date_created", nullable = false)
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime creationTime;
+    private DateTime dateCreated;
 
-    @Column(name = "modification_time", nullable = false)
+    @Column(name = "last_updated", nullable = false)
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime modificationTime;
+    private DateTime lastUpdated;
 
     @Version
     private long version;
 
     public abstract ID getId();
 
-    public DateTime getCreationTime() {
-        return creationTime;
+    public DateTime getDateCreated() {
+        return dateCreated;
     }
 
-    public DateTime getModificationTime() {
-        return modificationTime;
+    public DateTime getLastUpdated() {
+        return lastUpdated;
     }
 
     public long getVersion() {
@@ -39,14 +42,12 @@ public abstract class BaseEntity<ID> {
     @PrePersist
     public void prePersist() {
         DateTime now = DateTime.now();
-        this.creationTime = now;
-        this.modificationTime = now;
+        this.dateCreated = now;
+        this.lastUpdated = now;
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.modificationTime = DateTime.now();
+        this.lastUpdated = DateTime.now();
     }
 }
-
-
