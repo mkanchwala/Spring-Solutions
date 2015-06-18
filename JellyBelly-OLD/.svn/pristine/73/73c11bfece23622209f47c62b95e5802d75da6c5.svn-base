@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<bean id="dataSourceTemplate" class="org.apache.commons.dbcp.BasicDataSource" abstract="true">
+		<!-- <property name="driverClassName" value="${jdbc.driverClassName}" /> -->
+		<property name="initialSize" value="${database.datasource.initialSize}" />
+		<property name="maxActive" value="${database.datasource.maxActive}" />
+		<property name="maxIdle" value="${database.datasource.maxIdle}" />
+		<property name="maxWait" value="${database.datasource.maxWait}" />
+		<property name="minEvictableIdleTimeMillis" value="${database.datasource.minEvictableIdleTimeMillis}"/>
+		<property name="numTestsPerEvictionRun" value="${database.datasource.numTestsPerEvictionRun}"/>
+		<property name="timeBetweenEvictionRunsMillis" value="${database.datasource.timeBetweenEvictionRunsMillis}"/>
+		<property name="validationQuery" value="${database.datasource.validationQuery}"/>
+		<property name="removeAbandoned" value="true" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.jellybelly.user.beans" />
+	<!-- 	<property name="schemaUpdate" value="false" /> -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.jdbc.factory_class">net.bull.javamelody.HibernateBatcherFactory</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">validate</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+				<prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+				<prop key="hibernate.max_fetch_depth">5</prop>
+			</props>
+		</property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>

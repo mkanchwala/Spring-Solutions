@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mkanchwala.country.dto.CountryDTO;
 import com.mkanchwala.country.manager.CountryManager;
+import com.wordnik.swagger.annotations.Api;
 
 /**
  * @author mkanchwala
  *
  */
+@Api(basePath = "/countries", value = "Countries", description = "Operations with Countries", produces = "application/json")
 @RestController
 public class CountryController {
 	
