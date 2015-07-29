@@ -16,36 +16,36 @@ import com.mkanchwala.security.service.EmployeeService;
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
 	
-	@Autowired private EmployeeRepository menuRepository;
+	@Autowired private EmployeeRepository employeeRepository;
 
 	@Override
 	public List<Employee> findAll() {
-		return menuRepository.findAll();
+		return employeeRepository.findAll();
 	}
 
 	@Override
 	public Employee saveOrUpdate(Employee t) {
-		return menuRepository.save(t);
+		return employeeRepository.save(t);
 	}
 
 	@Override
 	public void delete(Employee t) {
-		menuRepository.delete(t);
+		employeeRepository.delete(t);
 	}
 
 	@Override
 	public Employee findByEmployeeName(String nome) {
-		return menuRepository.findByName(nome);
+		return employeeRepository.findByName(nome);
 	}
 
 	@Override
 	public void deleteAll() {
-		menuRepository.deleteAll();
+		employeeRepository.deleteAll();
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PreFilter("hasPermission(filterObject, 'administration')")
-	public List<Employee> filterEmployee(List<Employee> menus) {
-		return menus;
+	public List<Employee> filterEmployee(List<Employee> employees) {
+		return employees;
 	}
 }
