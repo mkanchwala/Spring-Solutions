@@ -7,5 +7,5 @@ As per the Project features to add up, will provide you hot things in the Tech s
 
 Stay Tuned with me on Github : WhiteLedger (https://github.com/mkanchwala/WhiteLedger.git) going to provide Amazon AWS solutions with the Same.
 
-You can also see my Utilities Repositories for some Sample utilities : https://github.com/mkanchwala/utilities
+You can also see my Utilities Repositories for some Sample utilities : https://github.com/mkanchwala/utilities And AWS related development codes or scripts : https://github.com/mkanchwala/aws-examples
 
