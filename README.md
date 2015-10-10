@@ -3,5 +3,9 @@
 
 For the Project kindly follow the instructions in the respective projects or file an issue if you deployment related issues.
 
-
 As per the Project features to add up, will provide you hot things in the Tech stack of Spring
+
+Stay Tuned with me on Github : Ejamaat (https://github.com/mkanchwala/Ejamaat) going to provide Amazon AWS solutions with the Same.
+
+You can also see my Utilities Repositories for some Sample utilities : https://github.com/mkanchwala/utilities
+
